@@ -101,6 +101,10 @@
         }
 
         function showFilter(e) {
+            // Stop propagation so that it doesn't register as a header click event.
+            e.preventDefault();
+            e.stopPropagation();
+
             var $menuButton = $(this);
             var columnDef = $menuButton.data("column");
 
@@ -114,8 +118,7 @@
             if (workingFilters.length === 0) {
                 // Filter based all available values
                 filterItems = getFilterValues(grid.getData(), columnDef);
-            }
-            else {
+            } else {
                 // Filter based on current dataView subset
                 filterItems = getAllFilterValues(grid.getData().getItems(), columnDef);
             }
@@ -174,10 +177,6 @@
 
             $menu.css("top", offset.top + $(this).height())
                  .css("left", (left > 0 ? left : 0));
-
-            // Stop propagation so that it doesn't register as a header click event.
-            e.preventDefault();
-            e.stopPropagation();
         }
 
         function columnsResized() {
